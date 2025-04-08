@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Webcam Filters</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 20px; }
+        video, canvas, img { border-radius: 10px; margin: 10px; }
+        button { padding: 10px 20px; font-size: 16px; margin: 15px; cursor: pointer; }
+        .outputs img { width: 200px; height: auto; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h2>📸 Live Webcam Filters</h2>
+
+    <video id="video" width="500" height="375" autoplay></video><br>
+    <button onclick="capture()">📷 Capture & Apply Filters</button>
+
+    <form method="POST" action="/webcam" id="captureForm">
+        <input type="hidden" name="webcam_image" id="webcam_image">
+    </form>
+
+    <canvas id="canvas" width="500" height="375" style="display:none;"></canvas>
+
+    {% if outputs %}
+    <div class="outputs">
+        <h3>✨ Filtered Results:</h3>
+        {% for name, filename in outputs.items() %}
+            <div>
+                <p><strong>{{ name }}</strong></p>
+                <img src="{{ url_for('static', filename='output/' + filename) }}" alt="{{ name }}">
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const webcamImageInput = document.getElementById('webcam_image');
+        const context = canvas.getContext('2d');
+
+        // Start webcam stream
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => video.srcObject = stream)
+            .catch(err => console.error("Webcam error:", err));
+
+        function capture() {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/png');
+            webcamImageInput.value = dataUrl;
+            document.getElementById('captureForm').submit();
+        }
+    </script>
+</body>
+</html>

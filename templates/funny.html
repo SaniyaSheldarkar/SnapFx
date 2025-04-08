@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Funny Snaps</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        video, canvas, img {
+            margin: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #ff6f61;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff3b2e;
+        }
+    </style>
+</head>
+<body>
+    <h2>😆 Funny Snaps</h2>
+
+    <video id="video" width="500" height="375" autoplay></video><br>
+
+    <button onclick="capture('funny')">😂 Funny Snap</button>
+    <button onclick="capture('swirl')">🌀 Swirl</button>
+    <button onclick="capture('mirror')">🪞 Mirror</button>
+
+    <form method="POST" id="funnyForm">
+        <input type="hidden" name="webcam_image" id="webcam_image">
+    </form>
+
+    <canvas id="canvas" width="500" height="375" style="display: none;"></canvas>
+
+    {% if result_img %}
+        <h3>🎉 Here's your Snap:</h3>
+        <img src="{{ url_for('static', filename='output/' + result_img) }}" alt="Snap Result" width="500">
+    {% endif %}
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const webcamImageInput = document.getElementById('webcam_image');
+        const form = document.getElementById('funnyForm');
+
+        // Access webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => { video.srcObject = stream; })
+            .catch(err => console.error("Error accessing webcam: ", err));
+
+        // Capture and submit to selected route
+        function capture(type) {
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataURL = canvas.toDataURL('image/png');
+    webcamImageInput.value = dataURL;
+
+    if (type === 'funny') form.action = '/funny_snap';
+    else if (type === 'swirl') form.action = '/swirl';
+    else if (type === 'mirror') form.action = '/mirror';
+
+    form.submit();
+}
+
+    </script>
+</body>
+</html>
