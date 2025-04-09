@@ -48,14 +48,52 @@ def watercolor(img): return cv2.stylization(img, sigma_s=60, sigma_r=0.6)
 def negative(img): return cv2.bitwise_not(img)
 
 def cartoon(img):
-    grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    blur = cv2.medianBlur(grey, 5)
-    edges = cv2.adaptiveThreshold(blur, 255, cv2.ADAPTIVE_THRESH_MEAN_C,
-                                  cv2.THRESH_BINARY, 9, 9)
-    color = cv2.bilateralFilter(img, 9, 300, 300)
-    return cv2.bitwise_and(color, color, mask=edges)
+    # Convert to gray
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-def canny(img): return cv2.Canny(img, 100, 200)
+    # Apply median blur
+    gray_blur = cv2.medianBlur(gray, 7)
+
+    # Detect edges using adaptive threshold
+    edges = cv2.adaptiveThreshold(gray_blur, 255,
+                                  cv2.ADAPTIVE_THRESH_MEAN_C,
+                                  cv2.THRESH_BINARY, blockSize=9, C=2)
+
+    # Apply bilateral filter to smooth color regions while preserving edges
+    color = cv2.bilateralFilter(img, d=9, sigmaColor=300, sigmaSpace=300)
+
+    # Combine edges with color image
+    cartoon = cv2.bitwise_and(color, color, mask=edges)
+
+    return cartoon
+
+
+def canny(img):
+    import cv2
+    import numpy as np
+
+    # Convert to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # First bilateral filter
+    blur1 = cv2.bilateralFilter(gray, 9, 80, 80)
+
+    # Canny edge detection
+    edges = cv2.Canny(blur1, 100, 110, apertureSize=5)
+
+    # More bilateral filtering
+    blur2 = cv2.bilateralFilter(edges, 21, 80, 80)
+    blur3 = cv2.bilateralFilter(blur2, 21, 100, 150)
+
+    # Dilation to enhance edges
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+    output = cv2.dilate(blur3, kernel)
+
+    return output
+
+
+
+
 
 def apply_funny_effect(frame):
     frame = cv2.bitwise_not(frame)
@@ -107,12 +145,20 @@ def home():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     outputs = {}
+    original_filename = None
+
     if request.method == 'POST':
         file = request.files['image']
         if file and file.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             img_array = np.frombuffer(file.read(), np.uint8)
             image = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+
+            # Save original image
+            original_filename = save_output(image, "original")
+
+            # Process filters
             outputs = {
+                "Original Image": original_filename,
                 "Grey Sketch": save_output(grey_sketch(image), "grey"),
                 "Watercolor": save_output(watercolor(image), "watercolor"),
                 "Negative": save_output(negative(image), "negative"),
@@ -121,7 +167,9 @@ def upload():
             }
         else:
             return render_template('upload.html', error="Invalid file type.")
-    return render_template('upload.html', outputs=outputs)
+    
+    return render_template('upload.html', outputs=outputs, original=original_filename)
+
 
 @app.route('/webcam', methods=['GET', 'POST'])
 def webcam():
