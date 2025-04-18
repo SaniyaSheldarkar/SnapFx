@@ -16,14 +16,23 @@
     {% if outputs %}
       <div class="row mt-5">
         {% for name, path in outputs.items() %}
-          <div class="col-md-4 mb-3">
-            <h5>{{ name.replace('_', ' ').title() }}</h5>
-            <img src="{{ url_for('static', filename='output/' + path) }}" class="img-fluid rounded">
-            <a class="btn btn-sm btn-outline-light mt-2" href="{{ url_for('static', filename='output/' + path) }}" download>Download</a>
-          </div>
+          {% if name == "Original Image" %}
+            <div class="col-12 mb-4">
+              <h4 class="text-info">{{ name }}</h4>
+              <img src="{{ url_for('static', filename='output/' + path) }}" class="img-fluid rounded border border-light" style="max-width: 400px;">
+              <a class="btn btn-sm btn-outline-light mt-2" href="{{ url_for('static', filename='output/' + path) }}" download>Download</a>
+            </div>
+          {% else %}
+            <div class="col-md-4 mb-3">
+              <h5>{{ name.replace('_', ' ').title() }}</h5>
+              <img src="{{ url_for('static', filename='output/' + path) }}" class="img-fluid rounded">
+              <a class="btn btn-sm btn-outline-light mt-2" href="{{ url_for('static', filename='output/' + path) }}" download>Download</a>
+            </div>
+          {% endif %}
         {% endfor %}
       </div>
     {% endif %}
+    
     <a href="/" class="btn btn-secondary mt-4">Back</a>
   </div>
 </body>
