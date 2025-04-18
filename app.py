@@ -92,9 +92,6 @@ def canny(img):
     return output
 
 
-
-
-
 def apply_funny_effect(frame):
     frame = cv2.bitwise_not(frame)
     frame = cv2.applyColorMap(frame, cv2.COLORMAP_JET)
