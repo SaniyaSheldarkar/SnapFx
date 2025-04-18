@@ -1,0 +1,31 @@
+1.	Graphical User Interface (GUI) Development: The project uses the Flask web framework to create a user-friendly interface for uploading or capturing images, selecting filters, and downloading results. HTML, CSS, and Bootstrap are integrated to design the frontend, making the web application interactive and accessible. 
+ 
+2.	File Handling (Upload and Webcam Capture): The application allows users to either upload images from their system or use webcam integration via JavaScript and HTML5 APIs to capture photos in real time. This dual input approach improves user flexibility. 
+ 
+3.	Image Processing with OpenCV: The core image manipulation tasks such as grayscale conversion, edge detection, cartoonizing, sketching, and applying watercolor effects are done using the OpenCV (cv2) library. It enables a wide range of processing features including resizing, filtering, and displaying images. 
+ 
+4.	Filter Techniques in DIP: Filters like Cartoon, Sketch, Watercolor, and Canny Edge Detection are implemented using a combination of Gaussian Blur, adaptive thresholding, bilateral filtering, and edge detection algorithms. These are designed to produce stylized outputs by manipulating pixel intensities. 
+ 
+5.	Real-Time Image Display: The system renders the processed image instantly using Flask’s templating engine and auto-refreshes the canvas without needing a full reload. This improves user experience and gives a real-time feel of the applied transformation. 
+ 
+6.	NumPy for Matrix Operations: The NumPy library is used for fast and efficient pixel-level computations. All image filters operate on the image’s array representation, enabling efficient mathematical operations like masking, blending, and transformation. 
+ 
+7.	Download & Save Functionality: After applying the desired filter, users are provided with a download link to save the processed image locally. This is implemented using Flask's file-handling methods, ensuring a seamless end-to-end workflow from upload to download. 
+
+
+
+Key Features: Python + Flask + OpenCV
+Central navigation menu on home.html with buttons to access:
+ ▪ Upload from PC (upload.html)
+ ▪ Webcam Capture (webcam.html)
+ ▪ Live Funny Filters (funny.html)
+
+User selects an option → Image is uploaded or captured
+
+DIP filters like Grey Sketch, Cartoon, Watercolor, Negative, Canny, Swirl, Mirror are applied
+
+Processed images are saved in static/output with unique filenames
+
+Final results are shown to the user on the same page
+
+
