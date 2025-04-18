@@ -1,3 +1,9 @@
-Flask
-opencv-python
-numpy
+Flask – For building the web app and handling routes/templates
+OpenCV (cv2) – Applies image processing filters and effects
+NumPy – Supports fast array and image data manipulation
+Pillow (PIL) – Converts and opens images from base64
+io.BytesIO – Handles image byte streams from base64
+base64 – Decodes webcam image data
+uuid – Generates unique filenames for saved images
+os – Manages file paths and creates folders
+
