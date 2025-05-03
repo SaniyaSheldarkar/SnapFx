@@ -1,8 +1,5 @@
 
 
----
-
-### ✅ Correct Version (Markdown-friendly)
 
 ````markdown
 # 🎨 SnapFX – Image Filtering Web Application
