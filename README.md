@@ -1,4 +1,10 @@
 
+
+---
+
+### ✅ Correct Version (Markdown-friendly)
+
+````markdown
 # 🎨 SnapFX – Image Filtering Web Application
 
 SnapFX is a fun and interactive web application that allows users to apply various real-time image filters either by uploading images or using their webcam. It's designed for both educational demonstrations and entertainment, making image processing accessible and visually engaging.
@@ -95,7 +101,7 @@ SnapFx/
 └── README.md
 ```
 
-
+---
 
 ## 🤝 Contributing
 
@@ -117,5 +123,4 @@ This project is open-source and available under the [MIT License](LICENSE).
 [GitHub](https://github.com/SaniyaSheldarkar) • [LinkedIn](https://www.linkedin.com/in/saniya-sheldarkar/)
 
 ```
-
 
