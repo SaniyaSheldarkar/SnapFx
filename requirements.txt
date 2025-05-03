@@ -1,4 +1,4 @@
-Flask – For building the web app and handling routes/templates
+Flask 
 OpenCV (cv2) – Applies image processing filters and effects
 NumPy – Supports fast array and image data manipulation
 Pillow (PIL) – Converts and opens images from base64
