@@ -77,8 +77,7 @@ SnapFX is a fun and interactive web application that allows users to apply vario
 
 ## 🌐 Live Demo
 
-[Click here to try SnapFX online](https://your-deployed-app-link.streamlit.app)
-(*Replace this link with your Streamlit/Heroku/Vercel deployment link*)
+[Click here to try SnapFX online](https://snapfx.onrender.com)
 
 ---
 
