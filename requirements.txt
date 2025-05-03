@@ -2,4 +2,4 @@ Flask
 opencv-python
 numpy
 gunicorn
-PIL
+Pillow==10.3.0
