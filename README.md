@@ -96,7 +96,7 @@ SnapFx/
 
 ## 🌐 Live Demo
 
-🚀 Coming Soon on Render or Streamlit Sharing!
+🚀 https://snapfx.onrender.com/
 
 ---
 
@@ -112,4 +112,3 @@ SnapFx/
 
 For queries or collaboration: [SaniyaSheldarkar](https://github.com/SaniyaSheldarkar)
 
--
